@@ -12,6 +12,7 @@ export const Navbar: React.FC = () => {
     { label: 'Collection', path: '/products' },
     { label: 'Suite Tour', path: '/#experience' },
     { label: 'About Us', path: '/about' },
+    { label: 'Resume', path: '/resume' },
     { label: 'Host Advisory', path: '/products/homestay-setup-audit-consulting' },
     { label: 'Contact', path: '/contact' }
   ];

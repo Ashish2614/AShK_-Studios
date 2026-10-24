@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Sparkles, HeartHandshake, Leaf, ShieldCheck, ArrowRight, MapPin } from 'lucide-react';
+import { Sparkles, HeartHandshake, Leaf, ShieldCheck, ArrowRight, MapPin, Code2, FileText, CheckCircle2 } from 'lucide-react';
 
 export const About: React.FC = () => {
   return (
@@ -141,6 +141,59 @@ export const About: React.FC = () => {
               <p className="text-sm text-[#4A5568] leading-relaxed">
                 Hospitality demands durability. Every seam, hinge, and glaze is tested to withstand frequent washings, heavy luggage weights, and constant guest turnover.
               </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Engineering & Full Stack Architecture Spotlight */}
+      <section className="py-16 bg-[#F3EFE6] border-b border-[#E8E3D9]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="p-8 sm:p-10 rounded-2xl bg-white border border-[#E2DDD5] shadow-sm flex flex-col lg:flex-row items-center justify-between gap-8">
+            <div className="space-y-4 max-w-2xl">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-[#1B3B2B]/10 text-[#1B3B2B]">
+                <Code2 className="w-4 h-4 text-[#C87A55]" />
+                <span>Full Stack Engineering & Architecture</span>
+              </div>
+              <h3 className="font-serif text-2xl sm:text-3xl font-bold text-[#1B3B2B]">
+                Crafted & Architected by Ashish Kumar Tripathi
+              </h3>
+              <p className="text-sm text-[#4A5568] leading-relaxed">
+                AShK Stays is built with modern, production-grade web technologies: <strong>React 19, TypeScript, Tailwind CSS, Vite</strong>, an automated <strong>Gmail enquiry pipeline</strong>, and full <strong>Razorpay payment integration</strong> supporting UPI, Netbanking, and Cards with server-side signature verification. Designed and optimized using <strong>Google AI Studio</strong>.
+              </p>
+              <div className="flex flex-wrap gap-2 text-xs text-[#2D3748]">
+                <span className="px-2.5 py-1 rounded bg-[#F8F6F0] border border-[#E8E3D9] flex items-center gap-1">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-[#1B3B2B]" /> Google AI Studio
+                </span>
+                <span className="px-2.5 py-1 rounded bg-[#F8F6F0] border border-[#E8E3D9] flex items-center gap-1">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-[#1B3B2B]" /> Razorpay Gateway
+                </span>
+                <span className="px-2.5 py-1 rounded bg-[#F8F6F0] border border-[#E8E3D9] flex items-center gap-1">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-[#1B3B2B]" /> Gmail Enquiry Automation
+                </span>
+                <span className="px-2.5 py-1 rounded bg-[#F8F6F0] border border-[#E8E3D9] flex items-center gap-1">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-[#1B3B2B]" /> Vercel Deployment
+                </span>
+              </div>
+            </div>
+
+            <div className="flex flex-col sm:flex-row lg:flex-col gap-3 shrink-0 w-full sm:w-auto">
+              <Link
+                to="/resume"
+                className="px-6 py-3 rounded-lg bg-[#1B3B2B] text-[#FBF9F5] text-xs font-semibold hover:bg-[#2A563F] transition-all flex items-center justify-center gap-2 shadow-xs"
+              >
+                <FileText className="w-4 h-4" />
+                <span>View Ashish's Updated Resume</span>
+              </Link>
+              <a
+                href="https://github.com/Ashish2614/AShK_-Studios"
+                target="_blank"
+                rel="noreferrer"
+                className="px-6 py-3 rounded-lg border border-[#1B3B2B] text-[#1B3B2B] text-xs font-semibold hover:bg-[#1B3B2B]/5 transition-colors flex items-center justify-center gap-2"
+              >
+                <span>GitHub Repository</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </a>
             </div>
           </div>
         </div>

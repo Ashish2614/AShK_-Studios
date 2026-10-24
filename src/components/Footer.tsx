@@ -70,6 +70,12 @@ export const Footer: React.FC = () => {
                 </Link>
               </li>
               <li>
+                <Link to="/resume" className="hover:text-white transition-colors text-amber-300 font-medium flex items-center gap-1.5">
+                  <span>Developer Resume</span>
+                  <span className="text-[10px] bg-amber-400/20 text-amber-200 px-1.5 py-0.5 rounded">New</span>
+                </Link>
+              </li>
+              <li>
                 <Link to="/#experience" className="hover:text-white transition-colors">
                   Suite Walkthrough
                 </Link>
