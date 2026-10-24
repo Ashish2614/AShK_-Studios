@@ -1,0 +1,8 @@
+{
+  "name": "AShK Stays",
+  "description": "Premium homestay products and hospitality experiences across India with secure Razorpay and Stripe checkout.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

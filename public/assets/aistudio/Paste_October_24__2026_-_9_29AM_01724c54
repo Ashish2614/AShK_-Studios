@@ -1,0 +1,674 @@
+# MASTER DEVELOPMENT PROMPT — AShK Stays
+
+## 1. Your Role
+
+Act as a senior full-stack engineer, UI/UX designer, e-commerce architect, security engineer, and QA specialist.
+
+Build a complete, production-oriented, fully responsive website for **AShK Stays**, an India-based business selling homestay-related products and services.
+
+The website must be a working application, not a static mockup. Implement functional navigation, product browsing, checkout, server-side validation, database integration, payment processing, transactional emails, error handling, and deployment documentation.
+
+Do not stop after generating the homepage. Complete all requested pages and workflows.
+
+If credentials are missing, implement the integrations safely using environment variables, test mode, and clearly documented setup instructions. Never fabricate successful payments or claim an integration works without verification.
+
+## 2. Brand Identity
+
+**Brand name:** AShK Stays  
+**Business type:** India-based homestay products and services business  
+**Primary market:** India  
+**Currency:** INR (₹)  
+**International payments:** Supported through Stripe Checkout  
+**Brand personality:** Premium, welcoming, trustworthy, modern, comfortable, and professional.
+
+Create an elegant visual identity that feels like a premium hospitality and lifestyle brand.
+
+### Design direction
+
+- Use a warm, sophisticated color palette:
+  - Forest green for primary brand elements.
+  - Warm ivory and cream for backgrounds.
+  - Muted terracotta or sandstone for accents.
+  - Charcoal for text.
+- Use premium typography with a refined serif font for major headings and a clean sans-serif font for body text.
+- Design a distinctive AShK Stays wordmark using typography and a subtle home, roof, or hospitality-inspired symbol.
+- Use high-quality imagery of beautiful Indian homestays, welcoming interiors, bedrooms, cottages, balconies, natural landscapes, and hospitality experiences where relevant.
+- Use generous whitespace, balanced layouts, elegant cards, subtle shadows, tasteful borders, and consistent spacing.
+- Add restrained animations, hover effects, and smooth transitions.
+- Avoid excessive gradients, generic SaaS dashboards, oversized rounded cards, and cluttered layouts.
+- Maintain a consistent design system across every page.
+
+The finished website should look like a real, established premium hospitality brand.
+
+## 3. Technology Stack
+
+Use the following technologies:
+
+- Next.js with App Router.
+- TypeScript with strict mode.
+- Tailwind CSS.
+- shadcn/ui for accessible interface components.
+- Zod for shared schema validation.
+- Supabase PostgreSQL for persistent order data.
+- Resend for transactional emails.
+- Razorpay for Indian payments, including supported UPI methods, Indian cards, and netbanking.
+- Stripe Checkout for international card payments.
+- React Hook Form where appropriate for complex forms.
+- Vitest for unit and integration tests.
+- ESLint and TypeScript compiler for code quality.
+
+Use supported, compatible package versions. Keep secrets exclusively in server-side environment variables. Never expose secret API keys through browser bundles, public environment variables, source code, or logs.
+
+Use Server Components by default and Client Components only where interactivity requires them.
+
+## 4. Required Pages and Routes
+
+Implement the following pages with a consistent responsive header and footer.
+
+### A. Home — `/`
+
+Create a premium landing page containing:
+
+1. Announcement bar for a relevant promotion or hospitality message.
+2. Responsive navigation with the AShK Stays logo.
+3. Hero section with a beautiful homestay photograph.
+4. Compelling headline, such as:
+   "Feel at Home, Wherever You Stay."
+5. Supporting copy explaining the AShK Stays offering.
+6. Primary CTA: Explore Our Collection.
+7. Secondary CTA: Contact Us.
+8. Featured products or services.
+9. Categories or collections.
+10. Why Choose AShK Stays section.
+11. Brand story section.
+12. Hospitality-inspired lifestyle imagery.
+13. Customer testimonials only when genuine testimonials are provided; otherwise use clearly identified placeholder content that is not presented as real reviews.
+14. Frequently asked questions.
+15. Newsletter or enquiry CTA only if its backend behavior is implemented.
+16. Premium footer with navigation, contact information, and legal links.
+
+Do not invent awards, customer counts, certifications, reviews, or business achievements.
+
+### B. About — `/about`
+
+Include:
+
+- Brand story.
+- Mission and vision.
+- Values and customer commitments.
+- What makes AShK Stays different.
+- Lifestyle photography.
+- CTA to explore products or contact the business.
+
+Keep company-specific facts configurable until the owner supplies the final details.
+
+### C. Products / Services — `/products`
+
+Build a real product and service listing interface.
+
+Features:
+
+- Responsive product grid.
+- Product image, title, description, price, and availability.
+- Product detail pages using `/products/[slug]`.
+- Search and category filtering.
+- Sort by price and relevance.
+- Clear INR pricing.
+- Product detail CTA.
+- Quantity selection where applicable.
+- Add-to-cart functionality if selling physical or digital products.
+- Empty, loading, and error states.
+- Mobile-friendly filters.
+
+Do not invent an actual inventory. Create clearly labeled demo products with configurable server-side pricing until the owner provides the real catalog.
+
+Keep product types configurable so the site can support the actual AShK Stays business model.
+
+### D. Checkout — `/checkout`
+
+Implement a functional checkout workflow.
+
+Collect the customer's:
+
+- Full name.
+- Email address.
+- Phone number.
+- Billing details where required.
+- Shipping address only when the selected product requires delivery.
+- Order summary.
+- Terms and privacy acknowledgement.
+
+Requirements:
+
+- Validate all submitted data with Zod on the server.
+- Display clear inline validation errors.
+- Recalculate all prices on the server.
+- Calculate quantities, discounts, taxes, and shipping server-side when applicable.
+- Never accept the final amount or currency from the browser as authoritative.
+- Prevent invalid quantities, manipulated prices, and unauthorized product identifiers.
+- Create a persistent pending order before initiating payment.
+- Use unique order references.
+- Prevent duplicate order creation where practical.
+- Show a clear order summary before payment.
+
+Payment options:
+
+**India — Razorpay**
+- Supported UPI methods.
+- Indian debit and credit cards.
+- Netbanking where enabled for the account.
+
+**International — Stripe Checkout**
+- International card payments supported by the configured Stripe account.
+- Use Stripe-hosted Checkout for secure payment collection.
+- Use a server-defined currency and amount.
+- Display the applicable currency and total before payment.
+
+Use INR as the default domestic currency. Only support additional currencies when the business, account configuration, and pricing rules permit them.
+
+Never collect or store raw card numbers, CVVs, or other sensitive payment credentials.
+
+### E. Payment Result Pages
+
+Implement:
+
+- `/checkout/success`
+- `/checkout/failure`
+- `/checkout/cancelled`
+
+These pages must:
+
+- Display an appropriate status message.
+- Show the order reference when available.
+- Explain what happens next.
+- Provide a way to return to the homepage or contact support.
+- Avoid exposing secret payment information.
+- Avoid trusting URL query parameters as proof of payment.
+
+A success redirect alone must never mark an order as paid. Read the verified order status from the server and display pending verification where appropriate.
+
+### F. Contact — `/contact`
+
+Create a professional enquiry page with:
+
+- Name.
+- Email.
+- Phone.
+- Message.
+- Hidden honeypot field for spam detection.
+- Submit button with loading state.
+- Success and error feedback.
+- Accessible labels and validation messages.
+- Business contact details loaded from configuration.
+
+Backend behavior:
+
+1. Validate inputs on the server using Zod.
+2. Validate fields on the client for a better user experience.
+3. Apply rate limiting to prevent abuse.
+4. Reject submissions that fail honeypot checks.
+5. Send an enquiry notification to the configured owner email using Resend.
+6. Send an acknowledgement email to the customer.
+7. Handle email provider failures gracefully.
+8. Never reveal private API errors to the browser.
+9. Avoid logging unnecessary personal information.
+
+Make the owner email configurable through environment variables.
+
+### G. Terms — `/terms`
+
+Create a clear, editable terms-of-service page covering relevant business terms, orders, payment processing, acceptable use, cancellations, limitations, and support.
+
+Do not represent generic template language as legal advice. Mark business-specific and jurisdiction-specific provisions for owner or legal review.
+
+### H. Privacy Policy — `/privacy`
+
+Explain:
+
+- Information collected.
+- Purposes of processing.
+- Payment provider involvement.
+- Email communications.
+- Data retention.
+- Security practices.
+- Customer rights and contact process.
+- Applicable privacy requirements.
+
+Do not claim compliance or certifications that have not been verified.
+
+### I. Refund Policy — `/refund-policy`
+
+Clearly describe:
+
+- Eligibility for refunds.
+- Cancellation conditions.
+- Refund request procedure.
+- Processing timelines.
+- Treatment of failed, cancelled, and duplicate payments.
+- Applicable product-specific exceptions.
+- Customer support contact.
+
+Keep the policy configurable until the owner confirms the actual commercial terms.
+
+## 5. Supabase Database
+
+Use Supabase PostgreSQL for persistent order storage.
+
+Create version-controlled SQL migrations and document how to apply them.
+
+### Orders table
+
+Include the following fields:
+
+- `id`: UUID primary key.
+- `customer_name`: customer name.
+- `customer_email`: customer email.
+- `amount`: integer representing the smallest unit of the currency.
+- `currency`: currency code.
+- `provider`: `razorpay` or `stripe`.
+- `provider_ref`: payment order, checkout session, or related provider reference.
+- `status`: `pending`, `paid`, `failed`, `cancelled`, or `refunded`.
+- `created_at`: creation timestamp.
+- `updated_at`: last-update timestamp.
+
+Also include fields needed for secure order processing, such as an internal order reference, provider event tracking, and a safely stored order snapshot. Store additional customer or shipping details only when needed.
+
+Use a separate order-items table if required for multiple products, including product identifiers, quantities, and server-calculated unit prices.
+
+### Security requirements
+
+- Use a server-only Supabase service-role key.
+- Never expose the service-role key to the client.
+- Enable Row Level Security where applicable.
+- Prevent anonymous users from reading or modifying other customers' orders.
+- Restrict privileged database operations to trusted server-side code.
+- Use parameterized database operations and appropriate constraints.
+- Do not store raw payment credentials.
+- Add suitable indexes for order references, customer lookups, statuses, and webhook event processing.
+
+Use migrations as the source of truth for the database schema.
+
+## 6. Secure Pricing Architecture
+
+Create a server-side product catalog and pricing module.
+
+Requirements:
+
+- Store canonical product prices on the server in integer paise for INR.
+- Convert amounts carefully for provider APIs that expect different units.
+- For INR, 1 rupee equals 100 paise.
+- Validate product IDs and quantities on every checkout request.
+- Recalculate line totals, discounts, shipping, and taxes on the server.
+- Never trust client-submitted totals.
+- Define rounding rules and test them.
+- Reject unsupported currencies and invalid quantities.
+- Keep product configuration separate from UI components.
+
+Add tests for normal prices, multiple quantities, rounding, invalid products, and tampered amounts.
+
+For international payments, implement a deliberate currency-conversion or separate-price configuration. Never label an INR amount as another currency without a valid pricing rule.
+
+## 7. Razorpay Integration
+
+Implement Razorpay through server-side API routes.
+
+Suggested routes:
+
+- `POST /api/checkout/razorpay`
+- `POST /api/webhooks/razorpay`
+
+Requirements:
+
+1. Create Razorpay orders on the server.
+2. Calculate the amount using trusted server-side pricing.
+3. Return only the public information required by the checkout UI.
+4. Use Razorpay's supported checkout interface.
+5. Verify payment signatures on the server using the official SDK or documented cryptographic procedure.
+6. Verify the appropriate signature using the correct order and payment identifiers.
+7. Process webhook events independently of the browser redirect.
+8. Verify the webhook signature against the exact raw request body using the configured webhook secret.
+9. Track provider event identifiers to prevent duplicate processing.
+10. Reconcile the payment against the internal order, expected amount, currency, and provider reference.
+11. Mark an order paid only after authoritative verification.
+12. Handle failed, cancelled, duplicate, and out-of-order events safely.
+
+Never use a browser callback alone to mark an order paid.
+
+Configure webhook secrets separately from Razorpay API secrets.
+
+## 8. Stripe Integration
+
+Implement Stripe Checkout through server-side API routes.
+
+Suggested routes:
+
+- `POST /api/checkout/stripe`
+- `POST /api/webhooks/stripe`
+
+Requirements:
+
+1. Create Stripe Checkout Sessions on the server.
+2. Use trusted internal order pricing.
+3. Associate each Checkout Session with the internal order.
+4. Use idempotency keys where appropriate.
+5. Set success and cancellation URLs using validated application configuration.
+6. Verify Stripe webhook signatures using the official Stripe SDK and the exact raw request body.
+7. Handle completed, asynchronous payment success, asynchronous payment failure, and expired session events where relevant.
+8. Verify the session, payment status, amount, currency, and associated order.
+9. Process each event idempotently.
+10. Mark an order paid only after verified payment confirmation.
+11. Handle duplicate and out-of-order events without downgrading a successfully paid order.
+12. Never trust query parameters or client-side redirects as proof of payment.
+
+Use Stripe test keys and test webhook secrets during development.
+
+## 9. Order Lifecycle and Email Notifications
+
+Implement a safe, documented order lifecycle.
+
+Suggested lifecycle:
+
+`pending → paid`
+
+Alternative terminal or recovery states may include `failed`, `cancelled`, and `refunded`.
+
+Do not allow unverified events to overwrite a verified paid state. Handle refunds and legitimate payment reversals through explicit, verified transitions.
+
+When a payment is verified:
+
+- Update the order atomically where possible.
+- Record the provider event to prevent duplicate handling.
+- Send a customer receipt through Resend.
+- Send an owner notification.
+- Include order reference, items, amount, currency, and status.
+- Never send duplicate receipts for repeated delivery of the same event.
+
+Email failures must not undo a successful payment. Record or log the notification failure safely and provide a retryable mechanism.
+
+Keep all email templates branded consistently with AShK Stays.
+
+## 10. Security and Reliability
+
+Implement:
+
+- Server-side Zod validation.
+- Strict TypeScript.
+- Environment-variable validation at startup or through a dedicated configuration module.
+- Rate limiting for public API routes.
+- Honeypot spam protection.
+- Webhook signature verification.
+- Idempotent webhook processing.
+- Secure error handling.
+- Safe logging without secrets or payment credentials.
+- Appropriate security headers.
+- CSRF protection where applicable to the chosen session or authentication architecture.
+- Input sanitization where needed for rendering.
+- Safe external URL handling.
+- Accessible error messages.
+- Database access restrictions.
+- Protection against duplicate checkout requests.
+
+Do not create fake authentication functionality. If user accounts are not necessary for the initial version, keep checkout guest-based and document the architecture accordingly.
+
+Do not invent a login system simply to make the website appear complete.
+
+## 11. Responsive Design and Accessibility
+
+The entire website must be mobile-first and responsive.
+
+Test the following viewport sizes:
+
+- 320px small mobile.
+- 375px mobile.
+- 768px tablet.
+- 1024px laptop.
+- 1440px desktop.
+
+Requirements:
+
+- No horizontal overflow.
+- Responsive navigation with a working mobile menu.
+- Touch-friendly buttons and controls.
+- Readable typography.
+- Responsive product cards and checkout layout.
+- Proper image sizing and aspect ratios.
+- Semantic HTML.
+- Keyboard navigation.
+- Visible focus indicators.
+- Accessible form labels and error announcements.
+- Suitable color contrast.
+- Meaningful image alt text.
+- Reduced-motion support.
+- Accessible dialogs and dropdowns.
+
+Use Next.js Image where appropriate and optimize images for performance.
+
+## 12. Loading, Success, Empty, and Error States
+
+Every interactive feature must have appropriate states.
+
+Examples:
+
+- Product loading skeletons.
+- Empty product search results.
+- Contact form submission progress.
+- Contact form success and failure feedback.
+- Checkout validation errors.
+- Payment initialization failures.
+- Payment verification pending state.
+- Order not found.
+- Duplicate webhook event handling.
+- Database unavailable.
+- Email provider failure.
+- Mobile navigation open and closed.
+
+Never leave buttons non-functional or show indefinite loading spinners.
+
+## 13. Project Structure
+
+Use a clean, maintainable structure similar to:
+
+- `app/` — pages, layouts, loading states, error boundaries, API routes.
+- `components/` — reusable UI, header, footer, product cards, forms.
+- `lib/` — environment validation, Supabase client, pricing, validation, utilities.
+- `lib/payments/` — Razorpay and Stripe server-side integrations.
+- `lib/email/` — Resend client and email templates.
+- `lib/security/` — rate limiting and security helpers.
+- `lib/orders/` — order creation, state transitions, and idempotency.
+- `lib/supabase/` — database clients and generated types.
+- `types/` — shared application types.
+- `supabase/migrations/` — database migrations.
+- `tests/` — unit and integration tests.
+- `public/` — logo assets and local static assets.
+
+Adjust the structure if needed, but keep payment and database logic separate from UI components.
+
+## 14. Environment Variables
+
+Create `.env.example` with placeholders only, including the applicable variables:
+
+- `NEXT_PUBLIC_SITE_URL`
+- `NEXT_PUBLIC_SUPABASE_URL`
+- `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+- `SUPABASE_SERVICE_ROLE_KEY`
+- `RESEND_API_KEY`
+- `OWNER_EMAIL`
+- `RESEND_FROM_EMAIL`
+- `RAZORPAY_KEY_ID`
+- `RAZORPAY_KEY_SECRET`
+- `RAZORPAY_WEBHOOK_SECRET`
+- `NEXT_PUBLIC_RAZORPAY_KEY_ID`
+- `STRIPE_SECRET_KEY`
+- `STRIPE_WEBHOOK_SECRET`
+- `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY`
+- `RATE_LIMIT configuration`
+- Any additional configuration genuinely required by the implementation.
+
+Only use public prefixes for values that are safe to expose. Keep secret keys private.
+
+The exact environment variable names must be consistent throughout the codebase and documentation.
+
+Never place actual secrets in `.env.example`.
+
+## 15. Automated Tests and Quality Checks
+
+Write and run automated tests for at least:
+
+### Pricing
+- Correct INR paise calculations.
+- Multiple items and quantities.
+- Invalid products.
+- Invalid quantities.
+- Rounding rules.
+- Tampered browser-submitted prices.
+
+### Contact form
+- Valid submission.
+- Invalid email.
+- Missing required fields.
+- Excessive input lengths.
+- Honeypot rejection.
+- Rate-limit behavior.
+
+### Payment security
+- Valid Razorpay signature.
+- Invalid Razorpay signature.
+- Valid Stripe webhook signature.
+- Invalid Stripe webhook signature.
+- Duplicate webhook events.
+- Incorrect order references.
+- Incorrect amount or currency.
+- Payment failure and cancellation.
+- Paid order cannot be downgraded by a duplicate or stale failure event.
+
+Use official SDK verification mechanisms where possible and isolate test fixtures from production credentials.
+
+Run:
+
+- ESLint.
+- TypeScript type-check.
+- Unit tests.
+- Production build.
+
+Fix all errors before declaring completion. Do not claim tests passed unless they were actually executed.
+
+Where live credentials are missing, use mocked or provider-supported test fixtures for automated testing and document which live integration checks remain outstanding.
+
+## 16. README and Deployment
+
+Create a comprehensive `README.md` covering:
+
+1. Project overview.
+2. Prerequisites.
+3. Installation commands.
+4. Local development.
+5. Environment variable setup.
+6. Supabase project creation.
+7. Database migrations.
+8. Razorpay test account and API keys.
+9. Razorpay webhook URL and secret setup.
+10. Stripe test account and API keys.
+11. Stripe Checkout configuration.
+12. Stripe webhook endpoint and signing secret.
+13. Resend API key and verified sender domain setup.
+14. Local webhook testing.
+15. Automated test commands.
+16. Production build.
+17. Deployment to Vercel or another compatible hosting platform.
+18. Production environment variables.
+19. Security checklist.
+20. Switching from test mode to live mode.
+21. Known limitations and remaining owner configuration.
+
+Include example webhook paths and local testing commands without publishing secrets.
+
+## 17. Execution Workflow
+
+Work incrementally and verify each milestone.
+
+**Milestone 1 — Foundation**
+- Inspect the existing repository.
+- Initialize or repair the Next.js project.
+- Install compatible dependencies.
+- Configure Tailwind, shadcn/ui, TypeScript, and linting.
+
+**Milestone 2 — Brand and Frontend**
+- Implement the responsive design system.
+- Build the header, footer, homepage, About, Products, Contact, and policy pages.
+- Implement real navigation and functional forms.
+- Add responsive layouts and accessible states.
+
+**Milestone 3 — Database**
+- Create Supabase integration.
+- Write database migrations.
+- Implement secure order persistence.
+- Verify database operations.
+
+**Milestone 4 — Pricing and Checkout**
+- Implement the trusted server-side catalog.
+- Implement pricing validation.
+- Create the checkout interface and pending-order workflow.
+
+**Milestone 5 — Payments**
+- Integrate Razorpay.
+- Integrate Stripe Checkout.
+- Implement signature verification and idempotent webhook handlers.
+- Test success, failure, cancellation, and duplicate-event scenarios.
+
+**Milestone 6 — Email**
+- Integrate Resend.
+- Implement enquiry emails, auto-replies, receipts, and owner notifications.
+- Make delivery failures recoverable.
+
+**Milestone 7 — Quality Assurance**
+- Run all automated tests.
+- Run lint and type-check.
+- Build the production application.
+- Fix discovered issues.
+- Verify responsive behavior and accessibility.
+
+**Milestone 8 — Documentation**
+- Create `.env.example`.
+- Complete the README.
+- Report the current implementation status and remaining configuration.
+
+Do not merely print the planned code or describe what should be done. Create and edit the actual files in the opened project, run the commands, inspect errors, and fix them.
+
+If a dependency, credential, or external service is unavailable, implement what can be completed independently and explain the exact limitation.
+
+## 18. Final Acceptance Criteria
+
+The project is complete only when:
+
+- All required pages exist and navigate correctly.
+- The design is responsive and branded as AShK Stays.
+- The product catalog uses trusted server-side prices.
+- The contact form validates on both client and server.
+- Spam protection and rate limiting are implemented.
+- Supabase order persistence is implemented.
+- Razorpay and Stripe server integrations are implemented.
+- Webhook signature verification is implemented.
+- Order status transitions and duplicate-event handling are safe.
+- Payment confirmation does not depend on browser redirects.
+- Email notifications and customer receipts are implemented.
+- Loading, success, failure, and empty states are present.
+- `.env.example` and README are complete.
+- Lint, type-check, automated tests, and production build have been run.
+- All discovered failures have been fixed or clearly documented when external credentials prevent verification.
+
+## 19. Final Report
+
+At the end, provide a concise implementation report with:
+
+1. Pages and features completed.
+2. Database schema and migrations created.
+3. Payment and email integrations implemented.
+4. Commands executed and their actual results.
+5. Required API keys and environment variables.
+6. Steps I must complete in Supabase, Razorpay, Stripe, Resend, and the hosting platform.
+7. Features verified locally.
+8. Features still unverified because credentials are missing.
+9. Whether each payment provider remains in test mode.
+10. Any remaining bugs, security concerns, or production blockers.
+
+**Important:** Build a polished, usable, functional AShK Stays website. Prioritize correctness, security, maintainability, accessibility, and a premium customer experience. Never fabricate test results, successful transactions, or completed external configuration.

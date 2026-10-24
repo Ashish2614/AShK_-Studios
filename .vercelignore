@@ -1,0 +1,8 @@
+.git
+.gitignore
+.env
+.env.local
+.env.*.local
+tests
+.aistudio
+*.md
